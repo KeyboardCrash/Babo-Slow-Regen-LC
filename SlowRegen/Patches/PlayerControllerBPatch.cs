@@ -13,26 +13,6 @@ namespace SlowRegen.Patches
     [HarmonyPatch(typeof(PlayerControllerB))]
     internal class PlayerControllerBPatch
     {
-/*
-        private static float currentPlayerWeight;
-        private static float newWeight;
-        private static float playerSprintMeter;
-        private static float drianMultipier = 0.7f;
-        private static float regenMultipier = 1.2f;
-        private static float weightMultipier = 0.9f;
-        private static float jumpMultipier = 0.7f;
-*/
-
-        // [HarmonyPatch(nameOf(PlayerControllerB.methodname))] recommended if available
-
-        /*
-                [HarmonyPatch("Update")]
-                [HarmonyPostfix]
-                private static void infinityHealthPatch(ref float ___health)
-                {
-                    ___health = 100f;
-                }
-        */
         [HarmonyPatch("LateUpdate")]
         [HarmonyPrefix]
         static void regenerateHpPatch(ref PlayerControllerB __instance)
@@ -55,7 +35,6 @@ namespace SlowRegen.Patches
                         {
                             GameNetworkManager.Instance.localPlayerController.healthRegenerateTimer = 3f;
                         }
-/*                        GameNetworkManager.Instance.localPlayerController.DamagePlayer(-1, false, true, (CauseOfDeath)0, 0, false, default(Vector3));*/
                         if (__instance.IsServer)
                         {
                             __instance.DamagePlayerClientRpc(-1, GameNetworkManager.Instance.localPlayerController.health + 1);
